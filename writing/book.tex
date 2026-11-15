@@ -1,0 +1,263 @@
+\documentclass[oneside,openany]{book}
+\usepackage{graphicx} % Required for inserting images
+\graphicspath{{images/}}
+\usepackage{blindtext}
+\usepackage[
+    backend=biber,
+    style=numeric,
+    refsection=chapter
+]{biblatex}
+\addbibresource{references.bib}
+\usepackage[hidelinks,linktoc=all]{hyperref}
+
+\usepackage{amsfonts}
+\usepackage{mathtools} %loads dcases environment: https://tex.stackexchange.com/questions/172693/cases-environment-compresses-fractions 
+%\usepackage{amsmath} %(loaded by mathtools)
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\usepackage{minted} % Code blocks
+\usepackage{algorithm} % Algorithm block
+\usepackage{algpseudocode}
+
+\usepackage{imakeidx}
+\makeindex
+
+\usepackage{subfiles} % keep as last import
+
+
+
+% Useful shortcuts
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% Environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem*{remark}{Remark}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem{fact}{Fact}[section]
+\newtheorem{notation}{Notation}[section]
+\newtheorem*{aside}{Aside}
+\newtheorem{example}{Example}[section]
+
+\title{Mathematics}
+\author{Scott Hwang, Adi Mittal \& Griffin Teller}
+\date{2026}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\chapter{EXAMPLE CHAPTER}
+\subfile{chapters/example-chapter}
+
+% ---------------------------------------------------------- %
+
+\part{Introduction}
+\subfile{chapters/introduction-chapters/introduction}
+
+% ---------------------------------------------------------- %
+
+\part{Foundations}
+\subfile{chapters/foundations-chapters/foundations-preamble}
+
+\chapter{Numbers, Logic, Sets, and Proofs}
+\subfile{chapters/foundations-chapters/numbers-logic-sets-proofs-chapter}
+
+\chapter{Linear Algebra}
+\subfile{chapters/foundations-chapters/intro-linear-algebra-chapter}
+
+\chapter{Calculus}
+\subfile{chapters/foundations-chapters/calculus-chapter}
+
+% ---------------------------------------------------------- %
+
+\part{Introduction to Pure Math}
+
+\chapter{Number Theory}
+\subfile{chapters/intro-pure-math-chapters/number-theory-chapter}
+
+\chapter{Real Analysis}
+\subfile{chapters/intro-pure-math-chapters/real-analysis-chapter}
+
+\chapter{Linear Algebra Revisited}
+\subfile{chapters/intro-pure-math-chapters/linear-algebra-revisited-chapter}
+
+\chapter{Group Theory}
+\subfile{chapters/intro-pure-math-chapters/group-theory-chapter}
+
+% ---------------------------------------------------------- %
+
+\part{Introduction to Applied Math}
+
+\chapter{Differential Equations}
+\subfile{chapters/intro-applied-math-chapters/differential-equations-chapter}
+
+\chapter{Algorithms}
+\subfile{chapters/intro-applied-math-chapters/algorithms-chapter}
+
+\chapter{Numerical Linear Algebra}
+\subfile{chapters/intro-applied-math-chapters/numerical-linear-algebra-chapter}
+
+\chapter{Optimization}
+\subfile{chapters/intro-applied-math-chapters/optimization-chapter}
+
+% ---------------------------------------------------------- %
+
+\part{Probability and Statistics}
+
+\chapter{Probability}
+\subfile{chapters/probability-statistics-chapters/probability-chapter}
+
+\chapter{Statistical Theory}
+\subfile{chapters/probability-statistics-chapters/statistical-theory-chapter}
+
+\chapter{Linear Regression}
+\subfile{chapters/probability-statistics-chapters/linear-regression-chapter}
+
+\chapter{Exponential Families, Generalized Linear Models, and Advanced Statistical Modeling}
+\chaptermark{GLMS and Statistical Modeling}
+\subfile{chapters/probability-statistics-chapters/exponential-families-and-glms-chapter}
+
+\chapter{Bayesian Statistics}
+\subfile{chapters/probability-statistics-chapters/bayesian-statistics-chapter}
+
+\chapter{Causal Inference}
+\subfile{chapters/probability-statistics-chapters/causal-inference-chapter}
+
+\chapter{Experiments}
+\subfile{chapters/probability-statistics-chapters/experiments-chapter}
+
+\chapter{Measurement Science}
+\subfile{chapters/probability-statistics-chapters/measurement-science-chapter}
+
+% ---------------------------------------------------------- %
+
+\part{Computer Science}
+
+\chapter{Information Theory}
+\subfile{chapters/computer-science-chapters/information-theory-chapter}
+
+\chapter{Introduction to Machine Learning}
+\subfile{chapters/computer-science-chapters/introduction-to-machine-learning-chapter}
+
+\chapter{Deep Learning}
+\subfile{chapters/computer-science-chapters/deep-learning-chapter}
+
+\chapter{Cryptography}
+\subfile{chapters/computer-science-chapters/cryptography-chapter}
+
+\chapter{Complexity}
+\subfile{chapters/computer-science-chapters/complexity-chapter}
+
+% ---------------------------------------------------------- %
+
+\part{Analysis}
+
+\chapter{Sequences and Series of Functions}
+\subfile{chapters/analysis-chapters/sequences-and-series-of-functions-chapter}
+
+\chapter{Metric Spaces}
+\subfile{chapters/analysis-chapters/metric-spaces-chapter}
+
+\chapter{Measure Theory and Probability}
+\subfile{chapters/analysis-chapters/measure-theory-and-probability-chapter}
+
+\chapter{Functional Analysis}
+\subfile{chapters/analysis-chapters/functional-analysis-chapter}
+
+\chapter{Analytic Number Theory}
+\subfile{chapters/analysis-chapters/analytic-number-theory-chapter}
+
+% ---------------------------------------------------------- %
+
+\part{Algebra}
+
+\chapter{Groups Revisited}
+\subfile{chapters/algebra-chapters/groups-revisited-chapter}
+
+\chapter{Rings Theory}
+\subfile{chapters/algebra-chapters/rings-theory-chapter}
+
+\chapter{Field Theory and Galois Theory}
+\subfile{chapters/algebra-chapters/field-theory-and-galois-theory-chapter}
+
+\chapter{Algebraic Number Theory}
+\subfile{chapters/algebra-chapters/algebraic-number-theory-chapter}
+
+% ---------------------------------------------------------- %
+
+\part{Discrete Math and Combinatorics}
+
+\chapter{Graph Theory}
+\subfile{chapters/discrete-math-combinatorics-chapters/graph-theory-chapter}
+
+\chapter{Sets, Intersections, and Chains}
+\subfile{chapters/discrete-math-combinatorics-chapters/sets-intersections-and-chains-chapter}
+
+\chapter{The Probabilistic Method}
+\subfile{chapters/discrete-math-combinatorics-chapters/the-probabilistic-method-chapter}
+
+% ---------------------------------------------------------- %
+
+\part{Geometry}
+
+\chapter{Euclidean Geometry}
+\subfile{chapters/geometry-chapters/euclidean-geometry-chapter}
+
+ % ---------------------------------------------------------- %
+
+\part{Topology}
+\chapter{Point-Set Topology}
+\subfile{chapters/topology-chapters/point-set-topology-chapter}
+
+% ---------------------------------------------------------- %
+
+\part{Model Theory and Foundations Revisited}
+
+\chapter{Propositional and First-Order Logic}
+\subfile{chapters/model-theory-foundations-chapters/propositional-and-first-order-logic-chapter}
+
+\chapter{Godel's Incompleteness Theorems}
+\subfile{chapters/model-theory-foundations-chapters/godel-s-incompleteness-theorems-chapter}
+
+\chapter{Model Theory}
+\subfile{chapters/model-theory-foundations-chapters/model-theory-chapter}
+
+\chapter{ZF and ZFC}
+\subfile{chapters/model-theory-foundations-chapters/zf-and-zfc-chapter}
+
+\chapter{Modal Logic}
+\subfile{chapters/model-theory-foundations-chapters/modal-logic-chapter}
+
+% ---------------------------------------------------------- %
+
+\part{Mathematical Models in the Social Sciences}
+
+\chapter{Game Theory}
+\subfile{chapters/mmss-chapters/game-theory-chapter}
+
+\chapter{Social Choice Theory}
+\subfile{chapters/mmss-chapters/social-choice-chapter}
+
+\chapter{Positive Models of Politics}
+
+
+\printindex
+
+\end{document}

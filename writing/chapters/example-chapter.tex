@@ -1,0 +1,131 @@
+\documentclass[../book.tex]{subfiles}
+\begin{document}
+
+% Show the heading here only when compiling this file on its own.
+\ifSubfilesClassLoaded{\chapter{EXAMPLE CHAPTER}}{}
+
+This chapter is to provide formatting conventions.
+
+\section*{Preamble that Every Chapter Should Have}
+
+% \noindent\textit{Primary citations/when/who/where course derived}
+\noindent\textit{Based on Course ABC from College University (2025-2026) using Book XYZ} \nocite{example2025}
+\newline
+
+Discuss motivation, central objects of study, what will be covered, and prerequisites. Prerequisites can vary even within a chapter; e.g. there can be an added real analysis prerequisite beginning in section $n$. Also discuss whether the sections should be read in order. Minor citations can also go here. 
+
+\textbf{Important notes:} 
+\begin{enumerate}
+    \item Be sure to keep citations up-to-date as you go \cite{example2026}. Citations go to the end of the chapter automatically. Use ``nocite" (like above, in the preamble) to include a citation that isn't in-line.
+    \item Keep the index up to date as you go. Here's an example.\index{Example}
+\end{enumerate}
+
+\section*{Example Section}
+
+\begin{definition}
+    The \textbf{real numbers} are a complete ordered field.
+\end{definition}
+
+\begin{lemma}\label{lemma:example}
+    This is a lemma.
+\end{lemma}
+
+\begin{proposition}
+    Propositions are the workhouse result.
+    \begin{proof}
+        Proofs go inside.
+    \end{proof}
+\end{proposition}
+
+\begin{theorem}[Named theorems go here, optional]
+    Quintics are unsolvable.
+\end{theorem}
+
+\begin{theorem}\label{theorem:example-theorem}
+    Theorem here that gets quoted later.
+\end{theorem}
+
+Here's a standalone proof, apart from its theorem:
+\begin{proof}[Proof of Theorem~\ref{theorem:example-theorem}]
+    Proofs can reference other results like Lemma~\ref{lemma:example}.
+\end{proof}
+
+\begin{remark}
+    This is for educational purposes.
+\end{remark}
+
+\begin{aside}
+    This is for funsies.
+\end{aside}
+
+\begin{notation}[Optional text]
+    If abbreviations are used, etc.
+\end{notation}
+
+\begin{example}\label{example:example-example}
+    This is an example. Not all examples have to be in the example environment, but it's useful to reference later.
+\end{example}
+
+This is a reference to example~\ref{example:example-example}.
+
+Equations should be like this.
+\begin{equation*}
+    x+y=z
+\end{equation*}
+or numbered like
+\begin{equation}\label{equation:example}
+    x+y=z
+\end{equation}
+See equation~\ref{equation:example}.
+\newline
+
+Some common notation: $\R$, $\Z$, $\Q$, $\C$. Default use $\R^n$. Indicator functions are $\I\{x\in S\}$. Expectation is $\E[X]$; probability is $\Prob(X=x)$.
+
+Arg max is like:
+\begin{equation*}
+    \hat \beta=\argmax_\beta \Vert y-X\beta\Vert^2
+\end{equation*}
+Left and right are useful for resizing brackets and parentheses:
+\begin{equation*}
+    \alpha\left(\frac{x}{y}+\I\left\{X^2\in R\right\}\right)
+\end{equation*}
+Sets should be written as
+\begin{equation*}
+    A=\{x\in \Q:x^2\leq 2\}
+\end{equation*}
+Functions are $f:X\rightarrow Y$, sometimes with the notation $x\mapsto f(x)$.
+\newline
+
+\noindent Code can be useful to include with the \texttt{minted} package.
+\begin{minted}{python}
+    print("Hello world!")
+\end{minted}
+\noindent Algorithm/pseudocode blocks without specific implementations are nice too.
+\begin{algorithm}
+\caption{An algorithm with caption}\label{alg:cap}
+\begin{algorithmic}
+\Require $n \geq 0$
+\Ensure $y = x^n$
+\State $y \gets 1$
+\State $X \gets x$
+\State $N \gets n$
+\While{$N \neq 0$}
+\If{$N$ is even}
+    \State $X \gets X \times X$
+    \State $N \gets \frac{N}{2}$  \Comment{This is a comment}
+\ElsIf{$N$ is odd}
+    \State $y \gets y \times X$
+    \State $N \gets N - 1$
+\EndIf
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+If you want quotation marks, use ``quotes like this". \textit{GRAMMATICAL NOTE:} If you use quotation marks, include the period or comma AFTER the end quotation --- ``hello", ``world" (not ``hello," ``world"). This goes against grammatical conventions, but it aligns better with math and CS writing (think lists of strings). Anyway, we can change later, but at least if we have a set convention from the start it'll be easy to make changes later. 
+
+\printbibliography[
+    heading=subbibintoc,
+    title={References}
+]
+
+\end{document}

@@ -1,0 +1,46 @@
+\documentclass[../../book.tex]{subfiles}
+\begin{document}
+
+% Show the heading here only when compiling this file on its own.
+\ifSubfilesClassLoaded{\chapter{Causal Inference}}{}
+
+\textit{first half is intro class, a lot of applied methods. second half is more theory.}
+
+\section{Potential Outcomes Framework}
+\textit{randomization, testing with fisher and neyman}
+
+\section{Variance reduction}
+\textit{rerandomization, stratification, matching}
+
+\section{Observational Causal Inference}
+\textit{ignorability, propensity score}
+
+\section{Regression Discontinuity Design}
+
+\section{Differences-in-Differences}
+\textit{maybe also talk about two-way fixed effects}
+
+\section{Instrumental Variables}
+
+\section{Synthetic Controls}
+
+\section{Robustness and Sensitivity}
+\textit{negative control exposures, negative control outcomes, sensitivity analysis via cornfield, etc. how to be convincing (John Snow!)}
+
+\section{Assumption-Lean Inference and Influence Functions}
+
+\section{Distribution Shift and Causal Inference}
+\textit{importance sampling, outcome modeling}
+
+\section{Augmented Inverse Probability Weighting}
+\textit{variance reduction for randomized settings; observational settings}
+
+\section{Prediction-Powered Inference}
+\textit{not really causal but extends a lot of the ideas}
+
+\printbibliography[
+    heading=subbibintoc,
+    title={References}
+]
+
+\end{document}

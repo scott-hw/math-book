@@ -1,0 +1,30 @@
+\documentclass[../../book.tex]{subfiles}
+\begin{document}
+
+% Show the heading here only when compiling this file on its own.
+\ifSubfilesClassLoaded{\chapter{Optimization}}{}
+
+\section{Optimization Problems}
+\subsection{Definition and Examples}
+\subsection{Lagrange Multipliers}
+
+\section{Convex Analysis}
+\subsection{Convex Sets}
+\textit{definition, examples, operations preserving, hyperplane theorems}
+\subsection{Convex Functions}
+\textit{definition, examples, operations preserving, dual functions}
+\subsection{Generalizations of Convexity}
+\textit{log convexity, quasiconvexity}
+\section{Convex Optimization}
+\textit{dual problem, geometry and saddle point interpretation, perturbation and sensitivity, KKT conditions, quasiconvex optimization}
+\section{Solving Convex Optimization Problems}
+\textit{unconstrained (gradient descent, newton's method), constrained (newton's method but repeated), interior point methods}
+\section{Non-convex Optimization}
+\textit{NP hardness, application of same methods as above, sensitivity to initialization, applications to deep learning}
+
+\printbibliography[
+    heading=subbibintoc,
+    title={References}
+]
+
+\end{document}

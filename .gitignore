@@ -1,0 +1,35 @@
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.synctex(busy)
+*.toc
+*.xdv
+*.nav
+*.snm
+*.vrb
+
+# minted code-highlighting cache
+_minted*/
+
+# Compiled PDF (build it locally with `latexmk`)
+main.pdf
+writing/**/*.pdf
+
+# Editor / OS clutter
+.DS_Store
+.vscode/
+*.swp
+*~
