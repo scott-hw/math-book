@@ -5,11 +5,12 @@ A collaborative LaTeX book by Scott Hwang, Adi Mittal, and Griffin Teller.
 ## Repository layout
 
 ```text
-main.tex                 # launcher for the whole book (leave alone)
+main.tex                 # preamble, macros, theorem environments, chapter order
 references.bib           # shared bibliography
 .latexmkrc               # shared build settings
+.vscode/settings.json    # shared LaTeX Workshop settings (build on save, side-by-side PDF)
 writing/
-    book.tex             # preamble, macros, theorem environments, chapter order
+    images/              # figures
     chapters/
         <part>-chapters/<topic>-chapter.tex
 ```
@@ -28,7 +29,7 @@ We use **BasicTeX** to keep the installation smaller, **VS Code** to edit and pr
 
 1. Go to the [BasicTeX download page](https://tug.org/mactex/morepackages.html).
 2. Download BasicTeX and run the installer. You do not need the full MacTeX download.
-3. When installation finishes, quit and reopen Terminal. If VS Code is already running, quit and reopen it too.
+3. When installation finishes, quit and reopen Terminal. If VS Code is already running, fully quit it with **Cmd+Q** and reopen it. Closing or reloading the window is not enough. VS Code finds programs only when it first starts. If it was already running during the install, it can't find LaTeX until you quit it.
 
 Open Terminal and run:
 
@@ -53,7 +54,7 @@ This updates your new installation. Your Mac may ask for your login password. No
 When the update finishes, run:
 
 ```bash
-sudo tlmgr install latexmk biblatex biber subfiles import \
+sudo tlmgr install latexmk biblatex biber subfiles \
   mathtools amsfonts amsmath amscls minted \
   algorithms algorithmicx imakeidx blindtext hyperref \
   graphics tools xcolor
@@ -92,7 +93,6 @@ math-book/
     main.tex
     references.bib
     writing/
-        book.tex
         chapters/
             ...
 ```
@@ -105,7 +105,23 @@ latexmk
 
 This builds the complete book. It runs LaTeX as many times as needed and runs Biber for references. The build options live in the repository's `.latexmkrc`, so everyone builds the same way. One option, shell-escape, lets the code-highlighting and index helpers run. Saving a `.tex` file in VS Code with LaTeX Workshop uses the same settings.
 
-When the build succeeds, you should have **`main.pdf`** next to `main.tex`. Open it to check the result. In LaTeX Workshop, you can also use the command **View LaTeX PDF file** from the Command Palette.
+When the build succeeds, you should have **`main.pdf`** next to `main.tex`. Open it to check the result.
+
+### Overleaf-style editing in VS Code
+
+You only need the terminal for the first check. After that, LaTeX Workshop works much like Overleaf. The repository's `.vscode/settings.json` sets it up for you.
+
+| Action | Shortcut |
+| --- | --- |
+| Save and rebuild the whole book | **Cmd+S** |
+| Open the PDF beside your code (once per session) | **Cmd+Option+V** |
+| Jump from the PDF to the source line | **Double-click** in the PDF |
+| Jump from the source line to the PDF | **Cmd+Option+J** |
+| Show errors and warnings | **Cmd+Shift+M** (Problems panel) |
+
+Every save rebuilds the complete book from `main.tex`, even when you are editing a chapter. A rebuild takes a few seconds. The PDF refreshes when it finishes.
+
+The settings also turn off VS Code's auto-save, so the book rebuilds only when you press Cmd+S. If the build fails, check the Problems panel first. For the full log, click the **TeX** icon in the left sidebar and choose **View Log messages**.
 
 For the first check, confirm that:
 
@@ -120,13 +136,13 @@ Chapters without citations will not display a References section. That is expect
 
 | File | What belongs there |
 | --- | --- |
-| `main.tex` | The small launcher for the complete book. Usually leave it alone. |
+| `main.tex` | Shared packages, formatting, part headings, chapter titles, and chapter order. |
 | `.latexmkrc` | Shared build options. Change only by team agreement. |
-| `writing/book.tex` | Shared packages, formatting, part headings, chapter titles, and chapter order. |
+| `.vscode/settings.json` | Shared editor settings. Change only by team agreement. |
 | Files under `writing/chapters/` | The actual chapter text, sections, equations, and chapter bibliography command. |
 | `references.bib` | The shared database of citation entries. |
 
-Keep each chapter’s `subfiles` wrapper. It lets the chapter reuse the shared preamble and compile separately.
+Keep each chapter’s `subfiles` wrapper. It lets the chapter reuse the shared preamble and compile separately. A new chapter should start with `\documentclass[<path to main.tex>]{subfiles}`, like `\documentclass[../../../main.tex]{subfiles}`. Copy that line from a chapter in the same folder. Then add a `\subfile{writing/chapters/...}` line for it in `main.tex`.
 
 Start by getting the **whole-book build** working. Individual chapter builds may need additional bibliography-path configuration; they are not the acceptance test for the complete book.
 
@@ -142,7 +158,7 @@ To check yours, run `pdflatex --version`.
 
 Package updates within a release year can still differ. Once the project builds reliably, coordinate future toolchain upgrades instead of upgrading independently. Run the update command above during initial setup; you do not need to run it every time you work on the book.
 
-Keep this README in the repository so everyone has the same package list and instructions. If someone adds a new package to `book.tex`, they should update these instructions in the same change.
+Keep this README in the repository so everyone has the same package list and instructions. If someone adds a new package to `main.tex`, they should update these instructions in the same change.
 
 GitHub stores our source and setup instructions. It does not automatically install BasicTeX or packages on collaborators’ computers.
 
@@ -155,14 +171,14 @@ Use this routine:
 3. Edit your chapter in VS Code.
 4. Build the whole book and check the PDF.
 5. Review the changed files in GitHub Desktop, write a short commit message, and commit.
-6. Push your branch and open a pull request.
+6. Push your branch and open a pull request (or feel free to just push to main, it's not that serious).
 
 Commit source files, references, figures, and shared configuration. The `.gitignore` already keeps build files and `main.pdf` out of Git. If GitHub Desktop lists `.aux`, `.log`, or PDF files as changes, don't commit them.
 
 ### Avoiding merge conflicts
 
 - **Mostly edit your own chapters.** Most conflicts come from two people editing the same chapter at the same time.
-- **Coordinate changes to shared files.** `writing/book.tex` (macros, packages, chapter order) and `references.bib` affect everyone. Keep those changes small and merge them quickly.
+- **Coordinate changes to shared files.** `main.tex` (macros, packages, chapter order) and `references.bib` affect everyone. Keep those changes small and merge them quickly.
 - **Where practical, put one sentence per line** in `.tex` files. Git compares files line by line, so short lines make changes easier to review and conflicts rarer.
 - **Pull often and keep branches short-lived.**
 
