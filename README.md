@@ -2,6 +2,10 @@
 
 A collaborative LaTeX book by Scott Hwang, Adi Mittal, and Griffin Teller.
 
+[![Build PDF](https://github.com/scott-hw/math-book/actions/workflows/build-pdf.yml/badge.svg)](https://github.com/scott-hw/math-book/actions/workflows/build-pdf.yml)
+
+**[Download the latest PDF](https://github.com/scott-hw/math-book/releases/latest/download/main.pdf)**. GitHub rebuilds it automatically after every push to `main`.
+
 ## Repository layout
 
 ```text
@@ -9,13 +13,22 @@ main.tex                 # preamble, macros, theorem environments, chapter order
 references.bib           # shared bibliography
 .latexmkrc               # shared build settings
 .vscode/settings.json    # shared LaTeX Workshop settings (build on save, side-by-side PDF)
+.github/workflows/       # automatic PDF build on GitHub
 writing/
     images/              # figures
     chapters/
         <part>-chapters/<topic>-chapter.tex
 ```
 
-Git does not track the compiled PDF. You build it on your own computer (step 5).
+Git does not track the compiled PDF. You build it on your own computer (step 5). GitHub also builds it after every push to `main` and every pull request.
+
+### Automatic builds on GitHub
+
+The workflow in `.github/workflows/build-pdf.yml` installs the same TeX Live packages listed in step 2 and runs `latexmk`. A build takes a few minutes.
+
+- **Push to `main`:** the new PDF replaces the one at the download link above. It also appears on the repository's **Releases** page as "Latest build".
+- **Pull request:** a check appears on the pull request. To see the PDF, click the check's **Details** link, open the run's **Summary**, and download `main-pdf` under **Artifacts**.
+- **Failed build:** the commit or pull request gets a red ✗, and the download link keeps the last good PDF. Open the failed run to see the error. The full LaTeX log is attached as `build-log`.
 
 ---
 
@@ -158,7 +171,7 @@ To check yours, run `pdflatex --version`.
 
 Package updates within a release year can still differ. Once the project builds reliably, coordinate future toolchain upgrades instead of upgrading independently. Run the update command above during initial setup; you do not need to run it every time you work on the book.
 
-Keep this README in the repository so everyone has the same package list and instructions. If someone adds a new package to `main.tex`, they should update these instructions in the same change.
+Keep this README in the repository so everyone has the same package list and instructions. If someone adds a new package to `main.tex`, they should update these instructions in the same change. They should also add it to the package list in `.github/workflows/build-pdf.yml`. Otherwise the GitHub build fails.
 
 GitHub stores our source and setup instructions. It does not automatically install BasicTeX or packages on collaborators’ computers.
 
