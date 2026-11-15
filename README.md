@@ -131,6 +131,18 @@ You only need the terminal for the first check. After that, LaTeX Workshop works
 | Jump from the PDF to the source line | **Double-click** in the PDF |
 | Jump from the source line to the PDF | **Cmd+Option+J** |
 | Show errors and warnings | **Cmd+Shift+M** (Problems panel) |
+| Wrap the selection in `\textbf{}` / `\textit{}` | **Cmd+L, then Cmd+B** / **Cmd+L, then Cmd+I** (or **Cmd+B** / **Cmd+I** after the setup below) |
+
+To get plain **Cmd+B** and **Cmd+I**, like Overleaf, add them to your personal VS Code shortcuts. The project can't set shortcuts for you. Open the Command Palette (**Cmd+Shift+P**), run **Preferences: Open Keyboard Shortcuts (JSON)**, and paste this in. If the file already has entries, add only the two `{ ... }` blocks inside its `[ ]`.
+
+```json
+[
+  { "key": "cmd+b", "command": "latex-workshop.shortcut.textbf", "when": "editorTextFocus && editorLangId == 'latex'" },
+  { "key": "cmd+i", "command": "latex-workshop.shortcut.textit", "when": "editorTextFocus && editorLangId == 'latex'" }
+]
+```
+
+These apply only while you type in a `.tex` file. Elsewhere, Cmd+B and Cmd+I keep their usual VS Code jobs.
 
 Every save rebuilds the complete book from `main.tex`, even when you are editing a chapter. A rebuild takes a few seconds. The PDF refreshes when it finishes.
 
