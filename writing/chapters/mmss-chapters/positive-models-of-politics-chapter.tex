@@ -15,21 +15,21 @@
     (The winner is determined via majority rule, where indifferent voters vote randomly with equal probability.)
     The game works as follows:
     \begin{enumerate}
-        \item Candidates simultaneously commit to policy positions $p_A,p_B\in[0,1]$.
+        \item Candidates simultaneously commit to policy positions $x_A,x_B\in[0,1]$.
         \item Voters vote for the candidate whose policy position is closest to their ideal point.
         \item The candidate with more votes (i.e. greater mass closer to them) wins the election.
     \end{enumerate}
 \end{definition}
 
 \begin{theorem}
-    The unique Nash equilibrium for the Hotelling Model is $p_A=p_B=0$.
+    The unique Nash equilibrium for the Hotelling Model is $x_A=x_B=0$.
     \begin{proof}
-        First, we show $p_A=p_B=0$ is a Nash equilibrium. 
+        First, we show $x_A=x_B=0$ is a Nash equilibrium. 
         In this position, since every voter is indifferent, both candidates have a $1/2$ probability of winning.
-        Without loss of generality, suppose $B$ moves to $p_B=x>0$.
+        Without loss of generality, suppose $B$ moves to $x_B=x>0$.
         Then candidate $B$ receives all voters whose ideal points are closer to $x$ than to $0$, i.e. the range $(x/2,1]$. 
         Thus, candidate $B$ receives $1-x/2<1$ of the votes, while $A$ (still located at $0$) receives $x/2+1>1$ votes, corresponding to the range $[-1,x/2)$.
-        So candidate $A$ wins (with probability 1). This shows that $B$ cannot profitably deviate, so $p_A=p_B=0$ is a Nash equilibrium.
+        So candidate $A$ wins (with probability 1). This shows that $B$ cannot profitably deviate, so $x_A=x_B=0$ is a Nash equilibrium.
 
         The same kind of argument shows that this must be the only Nash equilibrium --- moving toward 0 is always profitable.
     \end{proof}
@@ -49,31 +49,134 @@
 \nocite{wittman1983candidate}
 \nocite{bernhardt2009case}
 
+\textit{interested in models that explain platform divergence}
+
 \begin{definition}[Calvert-Wittman Model of Elections]
-    Let $\R$ be a policy space, and let the median voter's ideal point be a random variable
-    \begin{equation*}
-        \theta_m=\delta_m+u
-    \end{equation*}
-    where $\mu$ is distributed with pdf $f$. 
-    (Intuitively, $\mu$ is a random shock to all voters' ideal points, while $\delta_m$ is the median's ideal point relative to the voter base.)
-    Assume $f$ is smooth and symmetric around zero with connected support, implying $f'(0)=0$ and $f(0)>0$.
+    Let the policy space be $\R$, and let the median voter's ideal point be a random variable $\delta$
+    with pdf $f$. Assume $f$ is smooth and symmetric around zero with connected support, implying $f'(0)=0$ and $f(0)>0$.
+    (Intuitively, we start with a voter distribution centered at 0, and a common shock moves the entire distribution by some quantity $\delta$.)
 
     Let there be two candidates, $A$ and $B$, where for simplicity they have ideal points $-\alpha$ and $\alpha$ respectively ($\alpha>0$). 
     If $z$ is the policy commitment of the winning candidate, the utility for candidate $X\in\{A,B\}$ with ideal point $\theta$ is 
     \begin{equation*}
-        u_X(\theta,z)=(\theta-z)^2+b\gamma_X
+        u_X(\theta,z)=w(|\theta-z|)+b\gamma_X
     \end{equation*}
-    where $\gamma_X$ is an indicator for whether $X$ wins.\footnote{The component $(\beta-z)^2$ can be replaced with a more general term $w(|\theta-z|)$ where $w$ is twice differentiable, strictly decreasing, concave, and satisfies the Inada conditions $w'(0)=0$ and $\lim_{x\rightarrow\infty}w'(x)=-\infty$. As this extra generality adds no insight here, we stick with a quadratic penalty.}
-    (Thus the candidate's utility decomposes into a policy-motivated component $(\theta-z)^2$ and an office-motivated component $b\gamma_X$; the candidate wants the winning policy to be close to their ideal point and derives an additional $b$ utility from winning. 
+    where $w$ is twice differentiable, strictly decreasing, concave, and satisfies the Inada conditions $w'(0)=0$ and $\lim_{x\rightarrow\infty}w'(x)=-\infty$, while $\gamma_X$ is an indicator for whether $X$ wins.\footnote{These conditions are standard in the literature, though we don't necessarily refer to all of them here. Quadratic utility $w(x)=-x^2$ works as an example if that's easier to think about.}
+    (Thus the candidate's utility decomposes into a policy-motivated component $w(|\theta-z|)$ and an office-motivated component $b\gamma_X$; the candidate wants the winning policy to be close to their ideal point and derives an additional $b$ utility from winning. 
     The magnitude of $b$ determines how much the candidate cares about winning compared to policy, where the office-motivated candidate in the Hotelling-Downs model is obtained from $b=\infty$.)
 
     The game order is the same as the Hotelling-Downs case:
     \begin{enumerate}
-        \item Candidates simultaneously commit to policy positions $p_A,p_B\in\R$.
+        \item Candidates simultaneously commit to policy positions $x_A,x_B\in\R$ to maximize expected utility.
         \item Voters vote for the candidate whose policy position is closest to their ideal point.
-        \item The candidate with more votes (i.e. greater mass closer to them) wins the election.
+        \item The candidate with more votes (i.e. wins the median voter) wins the election. 
+        Ties are broken randomly with equal probability.
     \end{enumerate}
+
+    For technical reasons, we also impose the condition that the \textit{hazard rate}
+    \begin{equation*}
+        h(x)=\frac{f(x)}{1-F(x)}
+    \end{equation*}
+    is increasing, where $F$ is the cdf.\footnote{This is a stronger condition than is necessary, but it is common in this kind of literature. Essentially, it guarantees that a candidate's win probability falls off at an increasing proportional rate for greater distances. An equivalent statement is that $1-F$ is log-concave. In practice, it ensures the expected utility has a single global maximum.}
 \end{definition}
+
+\begin{theorem}
+    If $|w'(\alpha)|>bf(0)$, there is a unique symmetric Nash equilibrium $-x_A=x_B=x>0$ satisfying
+    \begin{equation}\label{equation:calvert_wittman_foc}
+        \frac{w'(\alpha-x)}{w(\alpha+x)-w(\alpha-x)-b}=f(0)
+    \end{equation}
+    Otherwise, the unique symmetric equilibrium is convergent: $x_A=x_B=0$.
+    \begin{proof}[Proof idea]
+        Suppose there is a symmetric equilibrium $-x_A=x_B=x>0$. 
+        (We are not considering asymmetric equilibria here.)
+        It should be clear that $x\leq \alpha$; if both candidates were located \textit{outside} their ideal point, either could move to their ideal point and be more likely to win the median voter, thus gaining in both components of their utility.
+
+        By definition of a Nash equilibrium, it cannot be profitable for either candidate to deviate.
+        Consider a local deviation, moving $x$ by a small value $\varepsilon$.
+        
+        Moving toward 0 improves the probability of winning while increasing the distance to the candidate's ideal point; moving away from 0 does the opposite (assuming $x<\alpha$ strictly).
+        Suppose $B$ moves from $x$ to $x-\varepsilon$. We consider the effect of this change on expected utility through two pathways:
+        \begin{enumerate}
+            \item Changing the probability of who wins, ignoring changes to policy commitments, and
+            \item Changing the policy commitments, ignoring changes to the probability of winning.
+        \end{enumerate}
+        This can be made rigorous via the product rule, but we won't bother.
+
+        First, by how much does it improve the probability of winning?
+        After moving to $x-\varepsilon$, $B$ wins (with no tie) if the median voter's ideal point ends up in $(-\varepsilon/2,\infty)$, compared to $(0,\infty)$ before.
+        This increases the probability of winning by approximately $\varepsilon f(0)/2$.
+        For now, ignore the small change from $x$ to $x-\varepsilon$. If $B$ wins, they receive the utility $w(\alpha-x)+b$. If $B$ loses, they receive the utility $w(\alpha+x)$ since now $A$'s committed policy $-x$ occurs.
+        Thus, the effect is to increase the utility by approximately
+        \begin{equation*}
+            \frac{\varepsilon}{2}f(0)\bigl(w(\alpha-x)+b-w(\alpha+x)\bigr)
+        \end{equation*}
+
+        In the other direction, how much does that move affect utility solely through changing the policy commitment (i.e. effect on $w$)? 
+        Conditional on $B$ winning, this part of the utility changes by:
+        \begin{align*}
+            w(\alpha-x)-w(\alpha-x+\varepsilon)&\approx w'(\alpha-x)((\alpha-x)-(\alpha-x+\varepsilon))\\
+            &=-\varepsilon \, w'(\alpha-x)
+        \end{align*} 
+        (This number is positive because $w$ is decreasing.) 
+        If $A$ wins, the winning policy doesn't change. 
+        Since the probability of $B$ winning is approximately $1/2$ for a small change, the policy-motivated part of the utility decreases by about $-\varepsilon w'(\alpha-x)/2$.
+        Thus, we set the two terms equal to avoid either an inward or outward movement being profitable:
+        \begin{align*}
+            \frac{\varepsilon}{2} f(0)\bigl(w(\alpha-x) + b - w(\alpha+x)\bigr) &= -\frac{\varepsilon}{2}\, w'(\alpha-x) \\
+            \implies \frac{w'(\alpha-x)}{w(\alpha+x) - w(\alpha-x) - b}
+                &= f(0)
+        \end{align*}
+        recovering equation~\eqref{equation:calvert_wittman_foc}.
+        This first-order condition (arising from the first-order approximations) is thus required in any symmetric Nash equilibrium $-x_A=x_B=x>0$.
+
+        We wish to show that the first-order condition is also sufficient. 
+        This requires showing that it yields the global maximum in $B$'s expected utility, given $x_A=-x$.
+        This part of the proof is omitted, but relies on the increasing hazard rate condition.
+        
+        Now for existence and uniqueness of a solution to the first-order condition. Observe that the left-hand side 
+        \begin{equation*}
+            L(x)=\frac{w'(\alpha-x)}{w(\alpha+x) - w(\alpha-x) - b}=\frac{-w'(\alpha-x)}{w(\alpha-x) + b - w(\alpha+x)}
+        \end{equation*}
+        is strictly decreasing. (You can see this using quotient rule and checking signs.)
+        In particular, $L(x)$ runs from $L(0)=-w'(\alpha)/b=|w'(\alpha)|/b$ to $L(\alpha)=0$. 
+        Therefore, 
+        \begin{enumerate}
+            \item If $L(0)>f(0)$, i.e. $|w'(\alpha)|>bf(0)$, the first-order condition must happen for some unique value $x\in(0,\alpha)$ (by Intermediate Value Theorem), and it can only happen once (by monotonicity), yielding precisely one symmetric divergent equilibrium.
+            \item If $L(0)\leq f(0)$, i.e. $|w'(\alpha)|\leq bf(0)$, the first-order condition can never be satisfied for $x\in(0,\alpha)$, so there cannot be any symmetric divergent equilibrium with $x>0$.
+        \end{enumerate}
+        
+        In the latter case, we do get an equilibrium pooled at 0: $x_A=x_B=0$. The proof of this result is omitted, but is very similar to the above work. 
+        Note that we have not considered potential asymmetric Nash equilibria.
+    \end{proof}
+\end{theorem}
+
+\begin{corollary}[Stronger office motivations lead to less divergence]
+    Let $x(b)$ denote the symmetric equilibrium position given $b$, and let $\bar b=|w'(\alpha)|/f(0)$. Then:
+    \begin{enumerate}
+        \item If $b\geq \bar b$, the platforms converge at 0.
+        \item On $[0,\bar b)$, $x(b)$ is strictly decreasing in $b$ and approaching $0$ as $b\rightarrow \bar b$.
+        \item Even with no office motivation, there is not complete divergence to candidate's ideal points: $0<x(0)<\alpha$.
+    \end{enumerate}
+    \begin{proof}
+        \textbf{TBD}
+    \end{proof}
+\end{corollary}
+
+\textit{both uncertainty and policy motivation are needed for divergence. this gives a smooth push-pull effect}
+
+\begin{proposition}[Uncertainty alone is unsufficient to stop pooling]
+    basically if $b=\infty$, i.e. candidates are purely office-motivated but there is still uncertainty, then the unique symmetric equilibrium is $x_A=x_B=0$.
+    \begin{proof}
+        \textbf{TBD}
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}[Policy motivation alone is unsufficient to stop pooling]
+    basically if $f(0)=\infty$, i.e. candidates are policy-motivated but there is no uncertainty, then the unique symmetric equilibrium is $x_A=x_B=0$.
+    \begin{proof}
+        \textbf{TBD}
+    \end{proof}
+\end{proposition}
 
 \section{Third-Party Entry and Context-Dependent Voters}
 
