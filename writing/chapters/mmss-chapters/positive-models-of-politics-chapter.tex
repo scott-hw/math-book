@@ -4,8 +4,95 @@
 % Show the heading here only when compiling this file on its own.
 \ifSubfilesClassLoaded{\chapter{Positive Models of Politics}}{}
 
-\section{The Hotelling Model of Elections}
-\section{Condorcet Jury Theorem}
+\section{The Hotelling-Downs Model of Elections}
+
+\nocite{hotelling1929stability}
+\nocite{downs1957economic}
+
+\begin{definition}[Hotelling-Downs Model of Elections]
+    Let $[-1,1]$ be a policy space and voters' ideal points be uniformly distributed along the policy space. 
+    Let there be two candidates, $A$ and $B$, where each candidate wants to maximize their chance of winning the election. 
+    (The winner is determined via majority rule, where indifferent voters vote randomly with equal probability.)
+    The game works as follows:
+    \begin{enumerate}
+        \item Candidates simultaneously commit to policy positions $p_A,p_B\in[0,1]$.
+        \item Voters vote for the candidate whose policy position is closest to their ideal point.
+        \item The candidate with more votes (i.e. greater mass closer to them) wins the election.
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    The unique Nash equilibrium for the Hotelling Model is $p_A=p_B=0$.
+    \begin{proof}
+        First, we show $p_A=p_B=0$ is a Nash equilibrium. 
+        In this position, since every voter is indifferent, both candidates have a $1/2$ probability of winning.
+        Without loss of generality, suppose $B$ moves to $p_B=x>0$.
+        Then candidate $B$ receives all voters whose ideal points are closer to $x$ than to $0$, i.e. the range $(x/2,1]$. 
+        Thus, candidate $B$ receives $1-x/2<1$ of the votes, while $A$ (still located at $0$) receives $x/2+1>1$ votes, corresponding to the range $[-1,x/2)$.
+        So candidate $A$ wins (with probability 1). This shows that $B$ cannot profitably deviate, so $p_A=p_B=0$ is a Nash equilibrium.
+
+        The same kind of argument shows that this must be the only Nash equilibrium --- moving toward 0 is always profitable.
+    \end{proof}
+\end{theorem}
+
+\begin{enumerate}
+    \item \textit{expressive voting}
+    \item \textit{office-motivated politicians}
+    \item \textit{other features: commitments, no third-party entry, no uncertainty, etc.}
+    \item \textit{predicts platform convergence to the median voter's ideal point --- why does this not hold in real life?}
+    \item \textit{note it actually only matters where the median voter's ideal point is. sometimes in majority rule situations we only specify that}
+\end{enumerate}
+
+\section{Policy-Motivated Candidates and Uncertainty}
+
+\nocite{calvert1985robustness}
+\nocite{wittman1983candidate}
+\nocite{bernhardt2009case}
+
+\begin{definition}[Calvert-Wittman Model of Elections]
+    Let $\R$ be a policy space, and let the median voter's ideal point be a random variable
+    \begin{equation*}
+        \theta_m=\delta_m+u
+    \end{equation*}
+    where $\mu$ is distributed with pdf $f$. 
+    (Intuitively, $\mu$ is a random shock to all voters' ideal points, while $\delta_m$ is the median's ideal point relative to the voter base.)
+    Assume $f$ is smooth and symmetric around zero with connected support, implying $f'(0)=0$ and $f(0)>0$.
+
+    Let there be two candidates, $A$ and $B$, where for simplicity they have ideal points $-\alpha$ and $\alpha$ respectively ($\alpha>0$). 
+    If $z$ is the policy commitment of the winning candidate, the utility for candidate $X\in\{A,B\}$ with ideal point $\theta$ is 
+    \begin{equation*}
+        u_X(\theta,z)=(\theta-z)^2+b\gamma_X
+    \end{equation*}
+    where $\gamma_X$ is an indicator for whether $X$ wins.\footnote{The component $(\beta-z)^2$ can be replaced with a more general term $w(|\theta-z|)$ where $w$ is twice differentiable, strictly decreasing, concave, and satisfies the Inada conditions $w'(0)=0$ and $\lim_{x\rightarrow\infty}w'(x)=-\infty$. As this extra generality adds no insight here, we stick with a quadratic penalty.}
+    (Thus the candidate's utility decomposes into a policy-motivated component $(\theta-z)^2$ and an office-motivated component $b\gamma_X$; the candidate wants the winning policy to be close to their ideal point and derives an additional $b$ utility from winning. 
+    The magnitude of $b$ determines how much the candidate cares about winning compared to policy, where the office-motivated candidate in the Hotelling-Downs model is obtained from $b=\infty$.)
+
+    The game order is the same as the Hotelling-Downs case:
+    \begin{enumerate}
+        \item Candidates simultaneously commit to policy positions $p_A,p_B\in\R$.
+        \item Voters vote for the candidate whose policy position is closest to their ideal point.
+        \item The candidate with more votes (i.e. greater mass closer to them) wins the election.
+    \end{enumerate}
+\end{definition}
+
+\section{Third-Party Entry and Context-Dependent Voters}
+
+\nocite{callander2006context}
+\nocite{tversky1993context}
+
+\section{Introduction to Strategic Voting and the Condorcet Jury Theorem}
+
+\nocite{mclennan1998consequences}
+\nocite{barelli2022full}
+
+\section{A Citizen Candidate Model of Elections}
+
+\nocite{besley1997economic}
+\nocite{osborne1996model}
+
+\section{Campaign Promises as Signals of Private Candidate Motivation}
+
+\nocite{callander2008political}
 
 \printbibliography[
     heading=subbibintoc,
