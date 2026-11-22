@@ -53,16 +53,15 @@
 
 \begin{definition}[Calvert-Wittman Model of Elections]
     Let the policy space be $\R$, and let the median voter's ideal point be a random variable $\delta$
-    with pdf $f$. Assume $f$ is smooth and symmetric around zero with connected support, implying $f'(0)=0$ and $f(0)>0$.
-    (Intuitively, we start with a voter distribution centered at 0, and a common shock moves the entire distribution by some quantity $\delta$.)
+    with pdf $f$. Assume $f$ is smooth and symmetric around zero with connected support, implying $f'(0)=0$ and $f(0)>0$.\footnote{Note that this does not describe the distribution of \textit{voters}, rather the distribution of where the median voter's ideal point will occur. In this majority rule setup with no abstentions, this one point is enough to characterize what happens.}
 
     Let there be two candidates, $A$ and $B$, where for simplicity they have ideal points $-\alpha$ and $\alpha$ respectively ($\alpha>0$). 
-    If $z$ is the policy commitment of the winning candidate, the utility for candidate $X\in\{A,B\}$ with ideal point $\theta$ is 
+    If $x$ is the policy commitment of the winning candidate, the utility for candidate $X\in\{A,B\}$ with ideal point $\theta$ is 
     \begin{equation*}
-        u_X(\theta,z)=w(|\theta-z|)+b\gamma_X
+        u_X(\theta,x)=w(|\theta-x|)+b\gamma_X
     \end{equation*}
     where $w$ is twice differentiable, strictly decreasing, concave, and satisfies the Inada conditions $w'(0)=0$ and $\lim_{x\rightarrow\infty}w'(x)=-\infty$, while $\gamma_X$ is an indicator for whether $X$ wins.\footnote{These conditions are standard in the literature, though we don't necessarily refer to all of them here. Quadratic utility $w(x)=-x^2$ works as an example if that's easier to think about.}
-    (Thus the candidate's utility decomposes into a policy-motivated component $w(|\theta-z|)$ and an office-motivated component $b\gamma_X$; the candidate wants the winning policy to be close to their ideal point and derives an additional $b$ utility from winning. 
+    (Thus the candidate's utility decomposes into a policy-motivated component $w(|\theta-x|)$ and an office-motivated component $b\gamma_X$; the candidate wants the winning policy to be close to their ideal point and derives an additional $b$ utility from winning. 
     The magnitude of $b$ determines how much the candidate cares about winning compared to policy, where the office-motivated candidate in the Hotelling-Downs model is obtained from $b=\infty$.)
 
     The game order is the same as the Hotelling-Downs case:
@@ -92,15 +91,11 @@
         It should be clear that $x\leq \alpha$; if both candidates were located \textit{outside} their ideal point, either could move to their ideal point and be more likely to win the median voter, thus gaining in both components of their utility.
 
         By definition of a Nash equilibrium, it cannot be profitable for either candidate to deviate.
-        Consider a local deviation, moving $x$ by a small value $\varepsilon$.
+        Consider a local deviation, moving $B$ from $x$ to $x-\varepsilon$.
         
-        Moving toward 0 improves the probability of winning while increasing the distance to the candidate's ideal point; moving away from 0 does the opposite (assuming $x<\alpha$ strictly).
-        Suppose $B$ moves from $x$ to $x-\varepsilon$. We consider the effect of this change on expected utility through two pathways:
-        \begin{enumerate}
-            \item Changing the probability of who wins, ignoring changes to policy commitments, and
-            \item Changing the policy commitments, ignoring changes to the probability of winning.
-        \end{enumerate}
-        This can be made rigorous via the product rule, but we won't bother.
+        Moving toward 0 affects $B$'s utility in two ways. It improves the probability of winning, and it causes the winning policy to be further from the $B$'s ideal point when $B$ wins.
+        We consider each of these effects separately, holding the other fixed for small $\varepsilon$. 
+        (This can be made rigorous, but we don't bother.)
 
         First, by how much does it improve the probability of winning?
         After moving to $x-\varepsilon$, $B$ wins (with no tie) if the median voter's ideal point ends up in $(-\varepsilon/2,\infty)$, compared to $(0,\infty)$ before.
@@ -181,12 +176,215 @@
 \section{Third-Party Entry and Context-Dependent Voters}
 
 \nocite{callander2006context}
+\nocite{callander2008context}
 \nocite{tversky1993context}
 
-\section{Introduction to Strategic Voting and the Condorcet Jury Theorem}
+\textit{sketch:}
+Previously we supposed voters always voted for the candidate with the closest platform to their ideal point.
+This is a simplified view of voter behavior. 
+For one thing, few voters come into an election knowing precisely what policies they want.
+Rather, voters first assess the field of candidates, and then determine what they like. 
+This model treats voter behavior more explicitly, building on empirical research in behavioral economics.
+
+It adds abstentions because with two options alone nothing then all the work is for nothing.
+
+\begin{definition}[Callander-Wilson Model of Elections]
+    Let the policy space be $\R$, and voter's ideal points be distributed according to some density $f$ (with corresponding cdf $F$) that is continuous, is symmetric around 0, has support on all of $\R$, and is nondecreasing on $(-\infty,0)$.
+
+    Voters can vote for a candidate or abstain. Let $S$ denote the pool of candidates. 
+    We'll denote $x\in R$ to be the policy commitment of candidate $X$, $y\in \R$ for $Y$, etc.
+    Voters vote to minimize the following utility function.
+    If a voter has ideal point $\theta$, their utility from voting for a candidate $X\in S$ is 
+    \begin{equation*}
+        u(X\mid S, \theta)=-\alpha \, d(x\mid \theta) + \delta \sum_{Y\in S,Y\neq X} \, c(x,y\mid \theta) + \gamma
+    \end{equation*}
+    where $\alpha,\delta,\gamma\geq 0 $ are constants and
+    \begin{equation*}
+        d(x\mid \theta) = |x-\theta|^2
+    \end{equation*}
+    \begin{equation*}
+        c(x,y\mid \theta) = \frac{|y-\theta|^2}{|y-\theta|^2+|x-\theta|^2}-\frac{1}{2}
+    \end{equation*}
+    Abstaining gives utility 0. 
+
+    This should be interpreted as follows. 
+    $d(x\mid \theta)$ is the evaluation of the candidate $X$ in isolation: how much does their stated policy $x$ agree with my preference $\theta$?
+    $c(x,y\mid \theta)$ is the evaluation of the candidate $X$ in context against $Y$: seeing the alternative $X$ versus $Y$, do I prefer $X$ more?
+    (Observe that if $x$ and $y$ are equidistant to $\theta$, then $c(x,y\mid \theta)=0$, while if $x$ is closer to $\theta$ than $y$ is, then $c(x,y\mid \theta)>0$.)\footnote{The specific functional form is generalized to its essential conditions in \cite{callander2008context}, but it's not super important here.}
+    
+    $\alpha$, $\delta$, and $\gamma$ determine the weight of each component, plus how much they matter compare to abstaining. 
+    Notice that if candidate's policy positions are sufficiently far from a voter's ideal point, than the voter will prefer to abstain than to vote even for the closer candidate.
+
+    The game order is as follows:
+    \begin{enumerate}
+        \item Two dominant candidates $D_1$ and $D_2$ move first and simultaneously choose whether to enter and, if so, what policy platform to commit to. They act to maximize their chance of winning (purely office-motivated), and will not enter if they have probability 0 of winning.
+        \item A potential entrant $E$ makes the same choice.
+        \item Voters vote according to the utility function above. 
+        \item The candidate with more votes wins. A tie between $D_1$ and $D_2$ is broken randomly, while ties between a dominant candidate and the entrant are broken in favor of the dominant candidate. (Thus, $E$ only enters if they are guaranteed to win.)
+    \end{enumerate}
+\end{definition}
+
+\textit{interested in how this model might lead to two-candidate platform divergence like we see in practice}
+
+\begin{definition}
+    We say a Nash equilibrium of the Callander-Wilson model is a \textbf{two-candidate equilibrium} if only the dominant candidates enter and the entrant does not.
+    We denote the equilibrium by the optimal platforms $d_1^*,d_2^*\in \R$ of candidates $D_1$ and $D_2$ respectively.
+\end{definition}
+
+\begin{theorem}
+    There exists a $\delta'$ such that for any $\delta\geq \delta'$, there is a two-candidate equilibrium $(d_1^*,d_2^*)$, where $-d_1^*=d_2^*>0$. 
+    (That is, a divergent platform equilibrium exists if the context-dependent component has sufficiently high weight.)
+\end{theorem}
+
+\textbf{to-do: details}
+
+\section{The Condorcet Jury Theorem and Strategic Voting}
 
 \nocite{mclennan1998consequences}
 \nocite{barelli2022full}
+
+\textit{based on notes by Avidit Acharya}
+
+\begin{definition}[The Basic Condorcet Jury Setup]
+    There are $2n+1$ jurors. 
+    For each juror, let $\pi(G)$ and $\pi(I)=1-\pi(G)$ denote the juror's belief about if the suspect is guilty or innocent.
+    Every juror's prior belief is that the suspect is equally likely to be guilty and innocent:
+    \begin{equation*}
+        \pi(G)=\pi(I)=\frac{1}{2}
+    \end{equation*}
+    Each juror then receives an independent signal about the whether the suspect is innocent.
+    If the suspect is innocent, then each juror receives an ``innocent'' signal with probability $1/2<q_0<1$ and a guilty signal with probability $1-q_0$.
+    If the suspect is guilty, then each juror receives a ``guilty" signal with probability $1/2<q_1<1$, and an innocent signal with probability $1-q_1$.\footnote{One can easily imagine an alternative interpretation of this mathematical in the context of elections, where, for example, every voter receives a signal about whether a candidate would be ``better for the country'' compared to another.}
+\end{definition}
+
+\begin{theorem}[Condorcet Jury Theorem]
+    If every juror votes according to the signal they receive, the probability of acquitting an innocent suspect (likewise, of convicting a guilty suspect) converges to 1 as the jury size approaches $\infty$.
+    \begin{proof}
+        This statement amounts to the following: if $X_1,X_2,\cdots\iid \textrm{Bernoulli}(p)$ for $p>\frac{1}{2}$ and $S_k=\sum_{j=1}^k X_j$ (so $S_k\sim \textrm{Binomial}(k,p)$), then
+        \begin{equation*}
+            \lim_{n\rightarrow \infty}\Prob(S_{2n+1}>n)=1
+        \end{equation*}
+        Equivalently, we wish to show that 
+        \begin{equation*}
+            \lim_{n\rightarrow \infty}\Prob\left(\frac{S_{2n+1}}{2n+1}>\frac{n}{2n+1}\right)=1
+        \end{equation*}
+        The left term $S_{2n+1}/(2n+1)$ is a sample mean, with expectation $p>1/2$. 
+        The right term is strictly less than $1/2$.
+        Therefore, the statement follows from the Law of Large Numbers.
+    \end{proof}
+\end{theorem}
+
+\begin{remark}
+    \textit{note the role of sincere voting}
+\end{remark}
+
+\textit{discuss philosophical implications}
+
+\begin{definition}[The Strategic Condorcet Jury Setup]
+    Adopt the same setup as above. 
+    However, rather than voting sincerely, suppose that each juror is trying to maximize the probability of collectively reaching the ``correct'' decision (acquitting the innocent or convicting the guilty).
+    Equivalently, suppose each juror receives a payoff of 1 if the decision is correct and 0 otherwise, and suppose the jurors want to maximize their expected payoff.
+
+    Each juror thus has a (pure, nonrandomized) strategy:
+    \begin{equation*}
+        \{\textrm{innocent signal}, \textrm{guilty signal}\}\rightarrow \{\textrm{vote to acquit}, \textrm{vote to convict}\}
+    \end{equation*}
+    Sincere voting is given by
+    \begin{align*}
+        \textrm{innocent signal }(I)&\mapsto\textrm{vote to acquit}\\
+        \textrm{guilty signal }(G)&\mapsto\textrm{vote to convict}
+    \end{align*}
+
+    The equilibrium concept is a Bayesian Nash equilibrium: conditional on the private signal and holding all other jurors' strategies fixed, no juror can increase the posterior probability of a correct collective decision by changing their vote.
+\end{definition}
+
+\begin{theorem}[Sincere Voting Is Only Sometimes An Equilibrium]
+    Sincere voting is an equilibrium if and only if $q_1$ is sufficiently close to $q_0$, specifically
+    \begin{equation*}
+        \frac{1-q_1}{q_0}\leq \left(\frac{q_0}{q_1}\cdot\frac{1-q_0}{1-q_1}\right)^n\leq \frac{q_1}{1-q_0}
+    \end{equation*}
+    \begin{proof}
+        Suppose everybody, except possibly one juror $i$, votes sincerely. Should juror $i$ vote sincerely?
+        Suppose that $i$ receives the signal $s_i\in\{I,G\}$. 
+        The juror wants to maximize
+        \begin{equation*}
+        \Prob(\textrm{collective decision is correct}\mid s_i, \textrm{choice to acquit/convict})
+        \end{equation*}
+        
+        Let $n_I$ denote the number of jurors, other than $i$, that received the innocent signal, while $n_G$ received the guilty signal ($n_I+n_G=2n$).
+        Since we're considering a possible sincere voting equilibrium, $n_I$ jurors thus vote to acquit, and $n_G$ vote to convict.
+        As before, the majority threshold is $n+1$ voters.
+
+        The posterior expected payoff for the juror is 
+        \begin{align*}
+            \Prob(n_I\geq n+1,\textrm{ suspect is innocent}\mid s_i)&+\Prob(n_I\leq n-1,\textrm{ suspect is guilty}\mid s_i)\\
+            &+\Prob(n_I=n,\textrm{ juror votes correctly}\mid s_i)
+        \end{align*}
+        Crucially, the first two terms do not depend on juror $i$'s decision at all.
+        Whether juror $i$ votes to acquit or convict, they will receive the same payoff \textit{except} conditional on a split vote $n_I=n_G=n$.
+        In other words, juror $i$ can \textit{condition on being the pivotal vote}.
+        
+        We can thus see that it is optimal for $i$ to vote to acquit if and only if
+        \begin{equation*}
+            \Prob(n_I=n,\textrm{ suspect is innocent}\mid s_i)\geq \Prob(n_I=n,\textrm{ suspect is guilty}\mid s_i)
+        \end{equation*}
+        or equivalently
+        \begin{align*}
+            &\Prob(n_I=n,s_i\mid \textrm{suspect is innocent})\,\Prob(\textrm{suspect is innocent})\\
+            \geq\quad &\Prob(n_I=n,s_i\mid\textrm{suspect is guilty})\,\Prob(\textrm{suspect is guilty})
+        \end{align*}
+        due to Bayes' Theorem.
+
+        Since the prior probabilities $P(\textrm{suspect is innocent})$ and $P(\textrm{suspect is guilty})$ are both $1/2$,
+        this reduces to 
+        \begin{equation*}
+            \Prob(n_I=n,s_i\mid \textrm{suspect is innocent})
+            \geq\Prob(s_i, n_I=n\mid\textrm{suspect is guilty})
+        \end{equation*}
+        
+        If private signal is innocent $s_i=I$, therefore, then it is optimal to vote to acquit if and only if
+        \begin{equation*}
+            \binom{2n}{n}q_0^n(1-q_0)^n\cdot q_0\geq \binom{2n}{n}q_1^n(1-q_1)^n\cdot (1-q_1)
+        \end{equation*}
+
+        Meanwhile, if the private signal is guilty, $s_i=G$, then it is optimal to vote to convict if and only if
+        \begin{equation*}
+            \binom{2n}{n}q_1^n(1-q_1)^n\cdot q_1\geq \binom{2n}{n}q_0^n(1-q_0)^n\cdot (1-q_0)
+        \end{equation*}
+
+        For sincere voting to be optimal, both must be true. We can work out the algebra to show that the relevant condition is
+        \begin{equation*}
+            \frac{1-q_1}{q_0}\leq \left(\frac{q_0}{q_1}\cdot\frac{1-q_0}{1-q_1}\right)^n\leq \frac{q_1}{1-q_0}
+        \end{equation*}
+    \end{proof}
+\end{theorem}
+
+\begin{remark}
+    Obviously, if $q_0=q_1=q$, then this condition is
+        \begin{equation*}
+            \frac{1-q}{q}\leq 1\leq \frac{q}{1-q}
+        \end{equation*}
+        which is always true as long as $q>1/2$. 
+        Therefore, if $q_0=q_1$, sincere voting is always an equilibrium.
+
+        However, when $q_0<q_1$ then
+        \begin{equation*}
+            \frac{q_0}{q_1}\cdot\frac{1-q_0}{1-q_1}>1 
+        \end{equation*}
+        and when $q_1<q_0$ then
+        \begin{equation*}
+            \frac{q_0}{q_1}\cdot\frac{1-q_0}{1-q_1}<1 
+        \end{equation*}
+        because the function $f(x)=x(1-x)$ is decreasing on $(1/2,1)$.
+
+    Therefore, when $q_0\neq q_1$, there is some $n$ such that when the jury size is larger than $2n+1$, sincere voting is no longer an equilibrium.
+\end{remark}
+
+\begin{remark}
+    \textit{equal weight errors both ways?}
+\end{remark}
+
+\textbf{to-do: what are the equilibria?}
 
 \section{A Citizen Candidate Model of Elections}
 
@@ -196,6 +394,91 @@
 \section{Campaign Promises as Signals of Private Candidate Motivation}
 
 \nocite{callander2008political}
+
+\section{A Behavioral Model of Preferences}
+
+\nocite{penn2017inequality}
+
+\textit{we move away from elections. first, we foray into a mathematical model of individual preferences (much like the context-dependent section). in principle a good goal might one day be to have a complete model at all levels, but here that is not considered. in any case, I find it very thought-provoking}
+
+\textit{idea: we define our values by what we're able to get good at, in order to not feel inferior}
+
+\begin{definition}[Penn Model of Personal Values and Skills]
+    Suppose there are two people (or two \textit{types} of people) $i$ and $j$, and two possible skills (or traits), with values denoted by $x,y\geq 0$.
+    Person $i$'s skills will be denoted $\mathbf{x}^i=(x^i,y^i)$.
+
+    Skills are valuable, in the sense that one of the components of a person's utility is a \textit{material payoff} $M(\mathbf{x}^i)$, where $M$ is increasing (in both arguments), continuously differentiable, and strictly concave in $x^i$ and $y^i$ (so greater values yield lower marginal payoffs).
+
+    In addition to material payoffs, people also have a sense of \textit{status} $S$, akin to self-image. 
+    Status decomposes into a part that depends on the raw skill level (people like being good at things) and a part measuring the alignment between a person's skills and values $\mathbf{v}^i=(v_x^i,v_y^i)\in \R^2_{\geq 0}$ (people like when their skills align with what's important to them).
+    For any skill profile $\mathbf{x}$, we have
+    \begin{equation*}
+        S(\mathbf{x},\mathbf{v}^i)=F(\mathbf{x})-D(\mathbf{x},\mathbf{v}^i)
+    \end{equation*}
+    where $F$ is continuously differentiable, additively separable, and strictly increasing in both arguments, and $D$ is continuously differentiable, additively separable, strictly increasing, and strictly convex in both of the coordinate-wise differences $|x-v_x|$ and $|y-v_y|$. 
+    $D$ represents a kind of \textit{cognitive dissonance}, where a person feels bad investing in skills inconsistent with their values.
+
+    The total utility is 
+    \begin{equation*}
+        U(\mathbf{x}^i,\mathbf{v}^i)=M(\mathbf{x}^i)-D(\mathbf{x}^i,\mathbf{v}^i)
+    \end{equation*}
+    Status manifests in the problem as a constraint: a person requires that their status is not significantly below the other person's status. 
+    Each person jointly chooses their skills and values according to the following problem:
+    \begin{align*}
+        \max_{\mathbf{x}^i,\mathbf{v}^i} \quad &U(\mathbf{x}^i,\mathbf{v}^i)\\
+        \textrm{subject to}\quad & \mathbf{p}^i\cdot \mathbf{x}^i\leq C^i\\
+        & S(\mathbf{x}^i,\mathbf{v}^i)-S(\mathbf{x}^j,\mathbf{v}^i)\geq T^i
+    \end{align*}
+    Here $\mathbf{p}^i\in \R^2_{\geq 0}$ is the cost of investing in skills, and $C^i>0$ is person $i$'s ``capability spend".
+    $T^i\leq 0$ represents how close $i$ must feel in status to $j$; when $T^i=0$, person $i$ wants to have no lower status than $j$, according to $i$'s own values ($j$ may have separate values).
+    The distinction between $F$ and $M$ allows for the ``skill-only'' component of status and of material payoff to scale differently from one another; this modeling choice is not particularly important.
+
+    The game order is very simple:
+    \begin{enumerate}
+        \item Each person receives their skill prices $\mathbf{p}$, their capability spend $C$, and their status threshold $T$.
+        \item Each person simultaneously chooses skills $\mathbf{x}$ and values $\mathbf{v}$ in order to solve the above optimization problem.
+    \end{enumerate}
+
+    We speak of solutions to the optimization problem in the Nash equilibrium sense: neither of the two people can change their skills and values to improve their utility, subject to the constraints (including the status constraint depending on the other person).
+\end{definition}
+
+\begin{remark}
+    In the absence of the status constraint, it is clear that $\mathbf{x}^i$ will be chosen to maximize material payoff subject to the cost constraint, and $\mathbf{v}^i$ will be set to equal $\mathbf{x}^i$.
+    Denote this baseline optimum by $\mathbf{x}^i_o=\mathbf{v}^i_o$. 
+    This applies to both people, since removing the status constraint removes any interaction between them.
+\end{remark}
+
+\begin{proposition}[The People Come in ``High'' and ``Low'' Types]
+    Suppose without loss of generality that $F(\mathbf{x}^j_o)\geq F(\mathbf{x}^i_o)$ i.e. $j$ has higher capability-based status component $F$ at baseline.
+    Then in any equilibrium:
+    \begin{enumerate}
+        \item The ``high type'' $j$ chooses its baseline optimum $\mathbf{x}^{j^*}=\mathbf{v}^{j^*}=\mathbf{x}^j_o$.
+        \item The ``low type'' $i$ chooses its baseline optimum if and only if that choice satisfies the status constraint against $\mathbf{x}^{j}_o$.
+    \end{enumerate}
+    Moreover, if the low type departs from its baseline optimum, then the status constraint binds i.e. holds with equality.
+\end{proposition}
+
+\begin{proposition}
+    If, for any skill bundle $\mathbf{x}^j$ chosen by the high type $j$, $i$'s feasible set is nonempty (i.e. $i$ can make a choice), then an equilibrium exists.
+\end{proposition}
+
+The remainder of this section will provide observations about what kinds of equilibrium behavior are possible in this setup. \textit{maybe pick an example}
+\begin{enumerate}
+    \item without social comparison, people freely optimize. with social comparison
+    \item with social comparison, people can protect their relative status by changing their skills and values together, in particular by overvaluing domains in which they have a competitive advantage. thus value divergence is a response to unequal opportunities.
+    \item extreme example: no skills, no values
+    \item policies that seek to reduce costs to acquiring skills can have counterintuitive and discontinuous effects on skills and values because the high type (point of comparison) is also changing
+\end{enumerate}
+
+\section{Political Accountability: Hidden Information}
+
+\nocite{harrington1993economic}
+\nocite{caneswrone2001leadership}
+
+\section{Political Accountability: Hidden Action}
+
+\nocite{ferejohn1986incumbent}
+\nocite{duggan2000repeated}
 
 \printbibliography[
     heading=subbibintoc,
