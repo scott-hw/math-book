@@ -15,6 +15,68 @@ The fourth part includes topics that don't fit into the above discussion but are
 \section{Estimation and the Statistical Model: From Probability to Statistics}
 \textit{cover normal mean with known variance 1}
 
+\textbf{note: this section is currently not fitting with the chapter structure I laid out. will have to change either the structure or the section.}
+
+\begin{definition}
+    In statistics, we usually refer to repeated samples (usually independent) from the same distribution as \textbf{data}.
+    A \textbf{statistic} is a function of the data.
+
+    For example, we might have the data $X_1,\cdots,X_n\iid N(\mu,\sigma^2)$ --- a normal sample --- and the sample mean $\bar X=\frac{1}{n}\sum_{i=1}^n X_i$ is a statistic.
+\end{definition}
+
+\begin{definition}
+    Let $X_1,\cdots,X_n$ be a sample from a distribution $f_\theta$ that depends on a parameter $\theta$.
+    A statistic $\hat \theta=\hat \theta(X_1,\cdots,X_n)$ used to estimate $\theta$ is called an \textbf{estimator} for $\theta$.
+\end{definition}
+
+\textit{another type of statistic, see later, is a test statistic}
+
+\begin{proposition}[Properties of Sample Mean]
+    Let $X_1,\cdots,X_n\iid N(\mu,1)$ and $\bar X_n=\frac{1}{n}\sum_{i=1}^n X_i$. 
+    (Here $\bar X_n$ is an estimator for $\mu$; we could write $\hat \mu=\bar X_n$ if we wanted.)
+    Then 
+    \begin{enumerate}
+        \item $\E[\bar X_n]=\mu$
+        \item $\Var[\bar X_n]=\frac{1}{n}$
+        \item $\bar X_n\sim N\left(\mu,\frac{1}{n}\right)$
+        \item For any $\varepsilon>0$, 
+        \begin{equation*}
+            \lim_{n\rightarrow \infty}\Prob\left(\left|\bar X_n - \mu\right|>\varepsilon\right)=0
+        \end{equation*}
+        i.e. $\bar X_n\convp \mu$.
+    \end{enumerate}
+    \begin{proof}
+        These have all been covered previously. The fourth point is the LLN.
+    \end{proof}
+\end{proposition}
+
+\textit{explain more about the move we're making to think about an estimator as a random variable}
+
+\begin{definition}
+    We say an estimator $\hat \theta$ for $\theta$ is \textbf{unbiased} if
+    \begin{equation*}
+        \E[\hat \theta]=\theta
+    \end{equation*}
+\end{definition}
+
+Unbiasedness means that on average, the estimator is ``centered'' around the correct spot.
+The previous proposition showed the sample mean of an i.i.d. normal sample is unbiased for the true mean.
+
+\textit{insert more examples}
+
+\begin{definition}
+    An estimator $\hat \theta$ for $\theta$ is \textbf{consistent} if
+    \begin{equation*}
+        \hat \theta \convp \theta
+    \end{equation*}
+\end{definition}
+
+\textit{how do you come up with estimators?}
+
+\begin{definition}
+    
+\end{definition}
+
 \section{Sampling Distributions and Confidence Intervals}
 \textit{cover normal mean with unknown variance, t distribution}
 
@@ -60,6 +122,8 @@ The fourth part includes topics that don't fit into the above discussion but are
 \textit{family-wise error, Bonferroni and Holm procedures, and the Benjamini–Hochberg procedure}
 
 \section{The Bootstrap}
+
+\section{Conformal Inference}
 
 \printbibliography[
     heading=subbibintoc,
