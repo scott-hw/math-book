@@ -210,7 +210,7 @@ this is a stricter requirement than UMVUE.
 
 The score function measures how the log-likelihood changes in the parameter. 
 
-\begin{proposition}\label{prop:score-fi-sample-size}[Score Function, Fisher Information, and Sample Size]
+\begin{proposition}[Score Function, Fisher Information, and Sample Size]\label{prop:score-fi-sample-size}
     Let $X_1,\cdots,X_n\iid f_\theta$ be data.
     Let $U_n(\theta)$ denote the score function and $I_n(\theta)$ denote the Fisher Information for a sample of $n$.
     Where necessary, let $U^{(i)}_1(\theta)$ denote the score function for the single sample depending on the $i$th data point.\footnote{This notation is just a cumbersome way to denote that $U_i$ technically refers to the score for a full sample of $i$, i.e. $\frac{\partial}{\partial \theta} f_{X_1,\cdots, X_i}(\theta)$, rather than $\frac{\partial}{\partial \theta} f_{X_i}(\theta)$. We won't use the $U^{(i)}$ notation again after this.}
@@ -249,13 +249,14 @@ The score function measures how the log-likelihood changes in the parameter.
     \end{proof}
 \end{proposition}
 The previous result allows us to just focus on the case of a single data point. We also get the following corollary:
-\begin{corollary} The Fisher Information is the variance of the score function.
+\begin{corollary} [Second Definition for Fisher Information]\label{cor:fi-variance-defn}
+    The Fisher Information is the variance of the score function.
     \begin{equation*}
         I_n(\theta) = \Var_\theta[U_n(\theta)]
     \end{equation*}
 \end{corollary}
 There is also a third alternative definition that works for well-behaved cases.
-\begin{proposition}[Alternative Definition for Fisher Information, Under Regularity]
+\begin{proposition}[Third Definition for Fisher Information, Under Regularity]
     Under regularity conditions,
     \begin{equation*}
         I(\theta)=-\E_\theta\left[\frac{\partial^2}{\partial \theta^2} \ell (\theta)\right]
@@ -286,8 +287,56 @@ There is also a third alternative definition that works for well-behaved cases.
 \end{proposition}
 
 \begin{remark}
-    \textbf{insert interpretation of FI}
+    \textbf{insert interpretation of FI. e.g. what is it a property of}
+
+    The entire point of Fisher information information pays off with the following result.
 \end{remark}
+
+\begin{theorem}[Cramèr-Rao Lower Bound]
+    Let $X_1,\cdots,X_n\iid f_\theta$, denoting $X=(X_1,\cdots,X_n)$, and $\hat \theta=\hat \theta(X)$ be unbiased for $\theta$.
+    Then, under regularity conditions,
+    \begin{equation*}
+        \Var_\theta[\hat \theta]\geq \frac{1}{I_n(\theta)}
+    \end{equation*}
+    \begin{proof}
+        The proof relies on a trick. Let $U=\frac{\partial}{\partial \theta}f_\theta(X)$ be viewed as a function of $X$ and hence as a random variable.
+
+        The Cauchy-Schwartz inequality (Theorem~\ref{thm:cauchy-schwartz-prob}) says that
+        \begin{equation*}
+            \Cov_\theta[\hat \theta,U]\leq \Var_\theta[\hat \theta]\Var_\theta[U]
+        \end{equation*}
+        where since $I_n(\theta)=\Var_\theta[U]$ (Proposition~\ref{cor:fi-variance-defn}), we get
+        \begin{equation*}
+            \Var_\theta[\hat \theta] \geq \frac{\Cov_\theta[\hat \theta,U]}{I_n(\theta)}
+        \end{equation*}
+        So it suffices to show that $\Cov_\theta[\hat \theta,U]=1$.
+
+        This follows because
+        \begin{align*}
+            \Cov_\theta[\hat \theta,U]&=E_\theta[\hat \theta U]-\E_\theta[\hat \theta]\underbrace{\E_\theta[U]}_{=0}\\
+            &=\E_\theta[\hat \theta U]\\
+            &=\int \hat \theta(x) \left(\frac{\partial}{\partial \theta}f_\theta(x)\right)dx\\
+            &=\int \frac{\partial}{\partial \theta}\hat\theta(x) f_\theta(x)\,dx\\
+            &=\frac{\partial}{\partial \theta} \int \hat\theta(x) f_\theta(x)\,dx\\
+            &=\frac{\partial}{\partial \theta}\E[\hat \theta]\\
+            &=\frac{\partial}{\partial \theta}\theta\\
+            &=1
+        \end{align*}
+        where we used regularity conditions to interchange the derivative and integral, and we used unbiasedness in the second-to-last step.
+    \end{proof}
+\end{theorem}
+
+\textbf{some interpretation}
+
+\begin{definition}
+    \textbf{efficiency}
+\end{definition}
+
+\textit{insert example or two}
+
+\begin{theorem}[MLE is Asymptotically Efficient]
+    \textbf{insert}
+\end{theorem}
 
 % \section{Sampling Distributions and Confidence Intervals}
 % \textit{cover normal mean with unknown variance, t distribution}
