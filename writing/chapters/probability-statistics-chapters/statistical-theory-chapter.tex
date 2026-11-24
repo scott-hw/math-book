@@ -12,10 +12,14 @@ The first part thus presents the rigor behind basic statistical methods that are
 
 The fourth part includes topics that don't fit into the above discussion but are still important to cover.
 
-\section{Estimation and the Statistical Model: From Probability to Statistics}
+\section{Introducing Statistical Point Estimation}
 \textit{cover normal mean with known variance 1}
 
-\textbf{note: this section is currently not fitting with the chapter structure I laid out. will have to change either the structure or the section.}
+\subsection{The Philosophy of Statistics}
+
+\textit{discussion}
+
+\subsection{The Sample Mean of a Normal Sample}
 
 \begin{definition}
     In statistics, we usually refer to repeated samples (usually independent) from the same distribution as \textbf{data}.
@@ -29,6 +33,8 @@ The fourth part includes topics that don't fit into the above discussion but are
     A statistic $\hat \theta=\hat \theta(X_1,\cdots,X_n)$ used to estimate $\theta$ is called an \textbf{estimator} for $\theta$.
 \end{definition}
 
+\textit{explain more about the move we're making to think about an estimator as a random variable}
+
 \textit{another type of statistic, see later, is a test statistic}
 
 \begin{proposition}[Properties of Sample Mean]
@@ -38,7 +44,6 @@ The fourth part includes topics that don't fit into the above discussion but are
     \begin{enumerate}
         \item $\E[\bar X_n]=\mu$
         \item $\Var[\bar X_n]=\frac{1}{n}$
-        \item $\bar X_n\sim N\left(\mu,\frac{1}{n}\right)$
         \item For any $\varepsilon>0$, 
         \begin{equation*}
             \lim_{n\rightarrow \infty}\Prob\left(\left|\bar X_n - \mu\right|>\varepsilon\right)=0
@@ -46,11 +51,15 @@ The fourth part includes topics that don't fit into the above discussion but are
         i.e. $\bar X_n\convp \mu$.
     \end{enumerate}
     \begin{proof}
-        These have all been covered previously. The fourth point is the LLN.
+        These have all been covered previously. The third point is the LLN.
     \end{proof}
 \end{proposition}
 
-\textit{explain more about the move we're making to think about an estimator as a random variable}
+\textit{this is a useful example for us to talk about good properties of estimators}
+
+\subsection{Desirable Properties of Estimators}
+
+\subsubsection{Unbiasedness}
 
 \begin{definition}
     We say an estimator $\hat \theta$ for $\theta$ is \textbf{unbiased} if
@@ -62,68 +71,271 @@ The fourth part includes topics that don't fit into the above discussion but are
 Unbiasedness means that on average, the estimator is ``centered'' around the correct spot.
 The previous proposition showed the sample mean of an i.i.d. normal sample is unbiased for the true mean.
 
-\textit{insert more examples}
+\textit{insert more examples of unbiasedness. including an order statistics one (don't need to explain where it came from)}
+
+\subsubsection{Low Variance}
+
+\textit{example: $X_1$ is also unbiased but has higher variance}
 
 \begin{definition}
-    An estimator $\hat \theta$ for $\theta$ is \textbf{consistent} if
+    An unbiased estimator $\hat \theta$ is an \textbf{uniformly minimum-variance unbiased estimator (UMVUE)} for a parameter $\theta$ if, for any value of $\theta$ and any unbiased estimator $\hat \theta'$,
     \begin{equation*}
-        \hat \theta \convp \theta
+        \Var_\theta[\hat \theta]\leq \Var_\theta[\hat \theta']
+    \end{equation*}
+    The notation $\Var_\theta$ emphasizes that the variance is taken from the distribution $f_\theta$; in principle, one estimator might have lower variance for some $\theta_1$ but not for $\theta_2$ (this would not provide \textit{uniformly} lower variance).
+    This is important because we don't know the true parameter in advance.
+\end{definition}
+
+\begin{proposition}[Sample Mean is the UMVUE for the Normal Mean]
+    Let $X_1,\cdots,X_n\iid N(\mu,1)$ and $\bar X=\frac{1}{n}\sum_{i=1}^n X_i$. 
+    Then for any unbiased estimator $\hat \mu_u=$ of $\mu$,
+    \begin{equation*}
+        \Var[\bar X]\leq \Var[\hat \mu_u]
+    \end{equation*}
+    \begin{proof}
+        See Fisher Information later. need to show achieves CRLB for every parameter value.
+    \end{proof}
+\end{proposition}
+
+the proof later will use a closely related topic: efficiency. 
+achieves a theoretical minimum variance (1/fisher information).
+this is a stricter requirement than UMVUE.
+
+\subsubsection{Low Mean Squared Error}
+
+\textit{aggregate unbiasedness and variance together}
+
+\begin{definition}
+    Let $\hat \theta$ be an estimator for $\theta$. The \textbf{mean squared error (MSE)} of $\hat \theta$ is
+    \begin{equation*}
+        \MSE[\hat \theta]=\E\left[(\hat \theta-\theta)^2\right]
     \end{equation*}
 \end{definition}
 
-\textit{how do you come up with estimators?}
+\textit{explain intuition: penalizes being far from the true parameter}
+
+\begin{proposition}[Alternative Definition of MSE]
+    Let $\hat \theta$ be an estimator for $\theta$. Then
+    \begin{equation*}
+        \MSE[\hat \theta]=\underbrace{(\theta-\E[\hat \theta])^2}_{\textrm{(squared) bias}}+\underbrace{\E\left[(\hat \theta-\E[\hat \theta])^2\right]}_{\textrm{variance}}
+    \end{equation*}
+    \begin{proof}
+        \textbf{to-do}
+    \end{proof}
+\end{proposition}
+
+\textit{more examples, including for the sample mean above}
+
+\textit{give examples for unbiased estimators not having the lowest MSE}
+
+\subsubsection{Consistency}
 
 \begin{definition}
-    
+    A sequence of estimators $\hat \theta_n$ (typically indexed by sample size) for $\theta$ is \textbf{consistent} if
+    \begin{equation*}
+        \hat \theta_n \convp \theta
+    \end{equation*}
+    That is, for any $\varepsilon>0$,
+    \begin{equation*}
+        \lim_{n\rightarrow\infty}\Prob\left(\bigl|\hat \theta -\theta\bigr|>\varepsilon\right)=0
+    \end{equation*}
 \end{definition}
 
-\section{Sampling Distributions and Confidence Intervals}
-\textit{cover normal mean with unknown variance, t distribution}
-
-\section{Hypothesis Testing and p-Values}
-\textit{use Binomial example}
-
-\section{Tests Based on the $\chi^2$ Distribution}
-
-\textit{estimating variance, goodness of fit, independence}
-
-\section{Two-Sample Testing}
-
-\section{Non-Parametric Two-Sample Testing}
-
-\section{One-way Analysis of Variance}
-
-\section{Survey Sampling: Stratification and Finite Populations}
-
-\section{Introduction to Estimator Theory}
-\textit{Bias, Variance, and Mean Squared Error}
+\textit{showing consistency: often useful to use LLN plus continuity tricks}
 
 \section{Constructing Estimators}
-\textit{Maximum Likelihood, the Method of Moments, and Bayesian Estimators}
+
+\begin{definition}
+    Let $f_\theta$ be a distribution function parameterized by $\theta$. 
+    The \textbf{likelihood function} is $f_\theta$ viewed as a function of the parameter $\theta$, for fixed data $X=(X_1,\cdots,X_n)$.
+    \begin{equation*}
+        L_X(\theta)=f_\theta(X)
+    \end{equation*}
+    
+    We often omit the subscript $X$.
+    We also have special notation for the log-likelihood function, which comes up often:
+    \begin{equation*}
+        \ell(\theta)=\log L(\theta)
+    \end{equation*}
+    \textbf{will be good to specify that all logs are natural}
+\end{definition}
+
+\begin{definition}
+    Let $X$ be data from a distribution $f_\theta$ parameterized by $\theta$.
+    The \textbf{maximum likelihood estimator} for $\theta$ is
+    \begin{equation*}
+        \hat \theta=\argmax_\theta L_X(\theta)
+    \end{equation*}
+\end{definition}
+
+\textit{examples from above: normal mean, order statistics}
+
+\begin{definition}
+    \textbf{method-of-moments estimator}
+\end{definition}
+
+\begin{definition}
+    \textbf{Bayesian posterior mean estimator}
+\end{definition}
+
+\textit{do some comparison of estimators}
+
+\textit{now do a bunch of examples}
 
 \section{Fisher Information and the Cramèr-Rao Lower Bound}
 
-\section{Sufficiency and UMVUE Estimators}
-\textit{sufficiency, rao-blackwell, completeness, lehman-scheffe}
+\textbf{to-do: add interpretation}
 
-\section{Asymptotic Theory}
-\textit{delta method, asymptotic normality and efficiency of MLE}
+\begin{definition}
+    Let $X_1,\cdots, X_n\iid f_\theta$ be fixed data.
+    \begin{enumerate}
+        \item The \textbf{score function} $U(\theta)$ is defined to be
+        \begin{equation*}
+            U(\theta)=\frac{\partial}{\partial \theta} \ell(\theta)
+        \end{equation*}
+        More specifically, the score function of a sample of $n$ is:
+        \begin{equation*}
+            U_n(\theta)=\frac{\partial}{\partial \theta} \ell_{X_1,\cdots,X_n}(\theta)= \frac{\partial}{\partial \theta} f_\theta(X_1,\cdots,X_n)
+        \end{equation*}
+        \item The \textbf{Fisher information} $I(\theta)$ is defined to be
+        \begin{equation*}
+            I(\theta)=\E_\theta\left[U(\theta)^2\right]
+        \end{equation*}
+        More specifically, the Fisher information of a sample of $n$ is:
+            \begin{equation*}
+            I(\theta_n)=\E_\theta\left[U_n(\theta)^2\right]
+        \end{equation*}
+    \end{enumerate}
+\end{definition}
 
-\section{Formalizing Hypothesis Testing, Significance Levels, and Power}
-\textit{including the relationship to confidence intervals}
+The score function measures how the log-likelihood changes in the parameter. 
 
-\section{Simple Tests and the Neyman-Pearson Lemma}
+\begin{proposition}\label{prop:score-fi-sample-size}[Score Function, Fisher Information, and Sample Size]
+    Let $X_1,\cdots,X_n\iid f_\theta$ be data.
+    Let $U_n(\theta)$ denote the score function and $I_n(\theta)$ denote the Fisher Information for a sample of $n$.
+    Where necessary, let $U^{(i)}_1(\theta)$ denote the score function for the single sample depending on the $i$th data point.\footnote{This notation is just a cumbersome way to denote that $U_i$ technically refers to the score for a full sample of $i$, i.e. $\frac{\partial}{\partial \theta} f_{X_1,\cdots, X_i}(\theta)$, rather than $\frac{\partial}{\partial \theta} f_{X_i}(\theta)$. We won't use the $U^{(i)}$ notation again after this.}
+    Under suitable regularity conditions,\footnote{This is a common sentence in statistical theory. It occurs when a result requires technical conditions that are beyond the scope of what we care about. In this case, we require interchange of the derivative and integral and that the support does not depend on $\theta$.}
+    \begin{enumerate}
+        \item $\E_\theta[U_1(\theta)]=0$
+        \item $U_n(\theta)=\sum_{i=1}^n U^{(i)}_1(\theta)$
+        \item $I_n(\theta)=nI_1(\theta)$
+    \end{enumerate}
+    \begin{proof}
+        For the first claim, note that
+        \begin{equation*}
+            U_1(\theta)=\frac{\partial}{\partial \theta}(\log f_\theta(x))=\frac{\frac{\partial}{\partial \theta} f_\theta(x)}{f_\theta(x)}
+        \end{equation*}
+        and therefore
+        \begin{align*}
+            \E_\theta[U_1(\theta)]&=\int \frac{\frac{\partial}{\partial \theta} f_\theta(x)}{f_\theta(x)} f_\theta(x) dx\\
+            &=\int \frac{\partial}{\partial \theta} f_\theta(x) dx\\
+            &= \frac{\partial}{\partial \theta} \underbrace{\int f_\theta(x) dx}_{\textrm{integral of a density}}\\
+            &= \frac{\partial}{\partial \theta} 1\\
+            &= 0
+        \end{align*}
+        where the regularity conditions are used to interchange the derivative and integral in the third step.
 
-\section{Composite Tests and Karlin-Rubin}
+        For the second claim, note that the log-likelihood of an i.i.d. sample is the sum of the log-likelihood of each $X_i$ (since the log turns a product into a sum), and the derivative passes over the sum.
 
-\section{Generalized Likelihood Ratio Tests}
+        For the third claim,
+        \begin{align*}
+            \E_\theta\left[U_n(\theta)^2\right]&=\E_\theta\left[\left(\sum_{i=1}^n U^{(i)}_1(\theta)\right)^2\right]\\
+            &=\E_\theta\left[\sum_{i=1}^n U^{(i)}_1(\theta)^2 + \sum_{i\neq j}U^{(i)}_1(\theta)U^{(j)}_1(\theta)\right]\\
+            &=\sum_{i=1}^n \E_\theta\left[U^{(i)}_1(\theta)^2\right]+\sum_{i\neq j}\underbrace{\E_\theta\left[U^{(i)}_1(\theta)\right]}_{=0}\underbrace{\E_\theta\left[U^{(j)}_1(\theta)\right]}_{=0}\\
+            &=\sum_{i=1}^n I_1(\theta)\\
+            &=nI_1(\theta)
+        \end{align*}
+        since for $i\neq j$, $U^{(i)}_1(\theta)$ and $U^{(j)}_1(\theta)$ are functions of independent $X_i$ and $X_j$ and hence are independent.
+    \end{proof}
+\end{proposition}
+The previous result allows us to just focus on the case of a single data point. We also get the following corollary:
+\begin{corollary} The Fisher Information is the variance of the score function.
+    \begin{equation*}
+        I_n(\theta) = \Var_\theta[U_n(\theta)]
+    \end{equation*}
+\end{corollary}
+There is also a third alternative definition that works for well-behaved cases.
+\begin{proposition}[Alternative Definition for Fisher Information, Under Regularity]
+    Under regularity conditions,
+    \begin{equation*}
+        I(\theta)=-\E_\theta\left[\frac{\partial^2}{\partial \theta^2} \ell (\theta)\right]
+    \end{equation*}
+    \begin{proof}
+        Following Proposition~\ref{prop:score-fi-sample-size}, it suffices to just consider the case of one data point.
 
-\section{Multiple Testing}
-\textit{family-wise error, Bonferroni and Holm procedures, and the Benjamini–Hochberg procedure}
+        Observe that, by quotient rule,
+        \begin{align*}
+            \frac{\partial^2}{\partial \theta^2} \ell (\theta)&=\frac{\partial^2}{\partial \theta^2} \log L(\theta)\\
+            &=\frac{\partial}{\partial \theta} \left(\frac{L'(\theta)}{L(\theta)}\right)\\
+            &=\frac{L''(\theta)L(\theta)-L'(\theta)^2}{L(\theta)^2}\\
+            &=\frac{L''(\theta)}{L(\theta)}-\frac{L'(\theta)^2}{L(\theta)^2}\\
+        \end{align*}
+        where, to be clear, $L'(\theta)=\frac{\partial}{\partial \theta}f_\theta(x)$ and likewise for the second derivative.
+        
+        Now we invoke a similar trick to Proposition~\ref{prop:score-fi-sample-size} to observe that
+        \begin{equation*}
+            \E_\theta\left[\frac{L''(\theta)}{L(\theta)}\right]=\int \frac{\frac{\partial^2}{\partial \theta^2}f_\theta(x)}{f_\theta(x)} f_\theta(x)dx=\int \frac{\partial^2}{\partial \theta^2} f_\theta(x)dx = \frac{\partial^2}{\partial \theta^2} \int f_\theta(x)dx=0
+        \end{equation*}
+        under regularity to exchange the integral and (second) derivative.
 
-\section{The Bootstrap}
+        Therefore,
+        \begin{equation*}
+            -\E_\theta\left[\frac{\partial^2}{\partial \theta^2} \ell (\theta)\right]=\E_\theta\left[\left(\frac{L'(\theta)}{L(\theta)}\right)^2\right]-\underbrace{\E_\theta\left[\frac{L''(\theta)}{L(\theta)}\right]}_{=0}=\E\left[U(\theta)^2\right]=I(\theta)
+        \end{equation*}
+    \end{proof}
+\end{proposition}
 
-\section{Conformal Inference}
+\begin{remark}
+    \textbf{insert interpretation of FI}
+\end{remark}
+
+% \section{Sampling Distributions and Confidence Intervals}
+% \textit{cover normal mean with unknown variance, t distribution}
+
+% \section{Hypothesis Testing and p-Values}
+% \textit{use Binomial example}
+
+% \section{Tests Based on the Chi-Squared Distribution}
+
+% \textit{estimating variance, goodness of fit, independence}
+
+% \section{Two-Sample Testing}
+
+% \section{Non-Parametric Two-Sample Testing}
+
+% \section{One-way Analysis of Variance}
+
+% \section{Survey Sampling: Stratification and Finite Populations}
+
+% \section{Introduction to Estimator Theory}
+% \textit{Bias, Variance, and Mean Squared Error}
+
+% \section{Constructing Estimators}
+% \textit{Maximum Likelihood, the Method of Moments, and Bayesian Estimators}
+
+% \section{Fisher Information and the Cramèr-Rao Lower Bound}
+
+% \section{Sufficiency and UMVUE Estimators}
+% \textit{sufficiency, rao-blackwell, completeness, lehman-scheffe}
+
+% \section{Asymptotic Theory}
+% \textit{delta method, asymptotic normality and efficiency of MLE}
+
+% \section{Formalizing Hypothesis Testing, Significance Levels, and Power}
+% \textit{including the relationship to confidence intervals}
+
+% \section{Simple Tests and the Neyman-Pearson Lemma}
+
+% \section{Composite Tests and Karlin-Rubin}
+
+% \section{Generalized Likelihood Ratio Tests}
+
+% \section{Multiple Testing}
+% \textit{family-wise error, Bonferroni and Holm procedures, and the Benjamini–Hochberg procedure}
+
+% \section{The Bootstrap}
+
+% \section{Conformal Inference}
 
 \printbibliography[
     heading=subbibintoc,
